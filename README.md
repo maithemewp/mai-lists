@@ -1,2 +1,2 @@
-# Mai Accordion
-Custom accordioon block for content toggles, transcripts, faq's, etc.
+# Mai Lists
+Custom lists with icons, numbers, colors, and spacing.
