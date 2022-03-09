@@ -1,0 +1,473 @@
+<?php
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+class Mai_List_Blocks {
+	/**
+	 * Gets it started.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return void
+	 */
+	function __construct() {
+		add_action( 'acf/init',                                    [ $this, 'register_blocks' ], 10, 3 );
+		add_action( 'acf/init',                                    [ $this, 'register_field_group' ], 10, 3 );
+		add_filter( 'acf/load_field/key=mai_list_icon_clone',      [ $this, 'load_list_icon' ] );
+		add_filter( 'acf/load_field/key=mai_list_item_icon_clone', [ $this, 'load_list_item_icon' ] );
+		add_filter( 'acf/load_field/key=mai_list_columns_clone',   [ $this, 'load_list_columns' ] );
+	}
+
+	/**
+	 * Registers blocks.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return void
+	 */
+	function register_blocks() {
+		if ( ! function_exists( 'acf_register_block_type' ) ) {
+			return;
+		}
+
+		acf_register_block_type(
+			[
+				'name'            => 'mai-list',
+				'title'           => __( 'Mai List', 'mai-lists' ),
+				'description'     => __( 'A custom list block.', 'mai-lists' ),
+				'render_callback' => [ $this, 'do_list' ],
+				'category'        => 'widget',
+				'keywords'        => [ 'list', 'number' ],
+				'icon'            => '<svg role="img" aria-hidden="true" focusable="false" style="display:block;" width="20" height="20" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g transform="matrix(1,0,0,1,0,13)"><g transform="matrix(0.333333,0,0,4,19,-60)"><path d="M9,16.125C9,16.056 8.328,16 7.5,16L4.5,16C3.672,16 3,16.056 3,16.125L3,16.375C3,16.444 3.672,16.5 4.5,16.5L7.5,16.5C8.328,16.5 9,16.444 9,16.375L9,16.125Z" style="fill:rgb(35,31,32);"/></g><g transform="matrix(2.66667,0,0,4,-6,-60)"><path d="M9,16.125C9,16.056 8.916,16 8.813,16L3.188,16C3.084,16 3,16.056 3,16.125L3,16.375C3,16.444 3.084,16.5 3.188,16.5L8.813,16.5C8.916,16.5 9,16.444 9,16.375L9,16.125Z" style="fill:rgb(35,31,32);"/></g></g><g transform="matrix(1,0,0,1,0,7)"><g transform="matrix(0.333333,0,0,4,19,-60)"><path d="M9,16.125C9,16.056 8.328,16 7.5,16L4.5,16C3.672,16 3,16.056 3,16.125L3,16.375C3,16.444 3.672,16.5 4.5,16.5L7.5,16.5C8.328,16.5 9,16.444 9,16.375L9,16.125Z" style="fill:rgb(35,31,32);"/></g><g transform="matrix(2.66667,0,0,4,-6,-60)"><path d="M9,16.125C9,16.056 8.916,16 8.813,16L3.188,16C3.084,16 3,16.056 3,16.125L3,16.375C3,16.444 3.084,16.5 3.188,16.5L8.813,16.5C8.916,16.5 9,16.444 9,16.375L9,16.125Z" style="fill:rgb(35,31,32);"/></g></g><g transform="matrix(1,0,0,1,0,1)"><g transform="matrix(0.333333,0,0,4,19,-60)"><path d="M9,16.125C9,16.056 8.328,16 7.5,16L4.5,16C3.672,16 3,16.056 3,16.125L3,16.375C3,16.444 3.672,16.5 4.5,16.5L7.5,16.5C8.328,16.5 9,16.444 9,16.375L9,16.125Z" style="fill:rgb(35,31,32);"/></g><g transform="matrix(2.66667,0,0,4,-6,-60)"><path d="M9,16.125C9,16.056 8.916,16 8.813,16L3.188,16C3.084,16 3,16.056 3,16.125L3,16.375C3,16.444 3.084,16.5 3.188,16.5L8.813,16.5C8.916,16.5 9,16.444 9,16.375L9,16.125Z" style="fill:rgb(35,31,32);"/></g></g></svg>',
+				'enqueue_assets'  => function() {
+					mai_enqueue_list_styles();
+				},
+				'supports'        => [
+					'align'  => false,
+					'anchor' => true,
+					'mode'   => false,
+					'jsx'    => true,
+				],
+			]
+		);
+
+		acf_register_block_type(
+			[
+				'name'            => 'mai-list-item',
+				'title'           => __( 'Mai List Item', 'mai-lists' ),
+				'description'     => __( 'A custom list item block.', 'mai-lists' ),
+				'render_callback' => [ $this, 'do_list_item' ],
+				'category'        => 'widget',
+				'icon'            => '<svg role="img" aria-hidden="true" focusable="false" style="display:block;" width="20" height="20" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="Box" transform="matrix(0.149758,0,0,0.0333276,-30.5651,9.00005)"><path d="M340.984,45.006L340.984,255.042L227.467,255.042L227.467,45.006M351,15.83C351,7.087 349.423,-0 347.477,-0C328.485,-0 238.488,-0.001 220.561,-0.001C219.737,-0.002 218.945,1.471 218.362,4.092C217.779,6.713 217.451,10.267 217.451,13.974C217.451,63.846 217.451,232.855 217.451,284.76C217.451,288.815 217.81,292.704 218.448,295.572C219.086,298.439 219.951,300.05 220.854,300.05C239.591,300.05 330.001,300.05 347.912,300.05C349.618,300.05 351,293.838 351,286.176C351,236.602 351,68.393 351,15.83Z" style="fill:rgb(35,31,32);fill-rule:nonzero;"/></g><g transform="matrix(1,0,0,1,0,1)"><g transform="matrix(0.333333,0,0,4,19,-60)"><path d="M9,16.125C9,16.056 8.328,16 7.5,16L4.5,16C3.672,16 3,16.056 3,16.125L3,16.375C3,16.444 3.672,16.5 4.5,16.5L7.5,16.5C8.328,16.5 9,16.444 9,16.375L9,16.125Z" style="fill:rgb(35,31,32);"/></g><g transform="matrix(2.66667,0,0,4,-6,-60)"><path d="M9,16.125C9,16.056 8.916,16 8.813,16L3.188,16C3.084,16 3,16.056 3,16.125L3,16.375C3,16.444 3.084,16.5 3.188,16.5L8.813,16.5C8.916,16.5 9,16.444 9,16.375L9,16.125Z" style="fill:rgb(35,31,32);"/></g></g></svg>',
+				'parent'          => [ 'acf/mai-list' ],
+				'supports'        => [
+					'align' => false,
+					'mode'  => false,
+					'jsx'   => true,
+				],
+			]
+		);
+	}
+
+	/**
+	 * Renders the list container.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return void
+	 */
+	function do_list( $block, $content = '', $is_preview = false ) {
+		$args = [
+			'preview'                => $is_preview,
+			'content'                => $this->get_list_inner_blocks(),
+			'type'                   => get_field( 'type' ),
+			'style'                  => get_field( 'style' ),
+			'icon'                   => get_field( 'icon' ),
+			'icon_brand'             => get_field( 'icon_brand' ),
+			'color_icon'             => get_field( 'color_icon' ),
+			'icon_size'              => get_field( 'icon_size' ),
+			'icon_margin_top'        => get_field( 'icon_margin_top' ),
+			'content_margin_top'     => get_field( 'content_margin_top' ),
+			'icon_gap'               => get_field( 'icon_gap' ),
+			'columns'                => get_field( 'columns' ),
+			'columns_responsive'     => get_field( 'columns_responsive' ),
+			'columns_md'             => get_field( 'columns_md' ),
+			'columns_sm'             => get_field( 'columns_sm' ),
+			'columns_xs'             => get_field( 'columns_xs' ),
+			'align_columns'          => get_field( 'align_columns' ),
+			'align_columns_vertical' => get_field( 'align_columns_vertical' ),
+			'column_gap'             => get_field( 'column_gap' ),
+			'row_gap'                => get_field( 'row_gap' ),
+			'margin_top'             => get_field( 'margin_top' ),
+			'margin_bottom'          => get_field( 'margin_bottom' ),
+		];
+
+		// Swap for brand.
+		if ( 'brands' === $args['style'] ) {
+			$args['icon'] = $args['icon_brand'];
+		}
+
+		// Remove brand.
+		unset( $args['icon_brand'] );
+
+		if ( isset( $block['anchor'] ) && ! empty( $block['anchor'] ) ) {
+			$args['id'] = $block['anchor'];
+		}
+
+		if ( isset( $block['className'] ) && ! empty( $block['className'] ) ) {
+			$args['class'] = $block['className'];
+		}
+
+		$list = new Mai_List( $args );
+
+		echo $list->get();
+	}
+
+	/**
+	 * Renders each list item.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return void
+	 */
+	function do_list_item( $block, $content = '', $is_preview = false ) {
+		$args = [
+			'preview'    => $is_preview,
+			'content'    => $this->get_list_item_inner_blocks(),
+			'style'      => get_field( 'style' ),
+			'icon'       => get_field( 'icon' ),
+			'icon_brand' => get_field( 'icon_brand' ),
+			'color_icon' => get_field( 'color_icon' ),
+		];
+
+		// Swap for brand.
+		if ( 'brands' === $args['style'] ) {
+			$args['icon'] = $args['icon_brand'];
+		}
+
+		// Remove brand.
+		unset( $args['icon_brand'] );
+
+		if ( isset( $block['className'] ) && ! empty( $block['className'] ) ) {
+			$args['class'] = $block['className'];
+		}
+
+		$item = new Mai_List_Item( $args );
+
+		echo $item->get();
+	}
+
+	/**
+	 * Gets list inner blocks.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return void
+	 */
+	function get_list_inner_blocks() {
+		$allowed    = [ 'acf/mai-list-item' ];
+		$template   = [
+			[ 'acf/mai-list-item', [], [] ],
+			// [ 'acf/mai-list-item', [], [] ],
+			// [ 'acf/mai-list-item', [], [] ],
+		];
+
+		return sprintf( '<InnerBlocks allowedBlocks="%s" template="%s" />', esc_attr( wp_json_encode( $allowed ) ), esc_attr( wp_json_encode( $template ) ) );
+	}
+
+	/**
+	 * Gets list item inner blocks.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return void
+	 */
+	function get_list_item_inner_blocks() {
+		$template = [
+			[ 'core/paragraph', [], [] ],
+		];
+
+		return sprintf( '<InnerBlocks template="%s" />', esc_attr( wp_json_encode( $template ) ) );
+	}
+
+	/**
+	 * Registers field groups.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return void
+	 */
+	function register_field_group() {
+		if ( ! function_exists( 'acf_add_local_field_group' ) ) {
+			return;
+		}
+
+		acf_add_local_field_group(
+			[
+				'key'    => 'mai_list_field_group',
+				'title'  => __( 'Mai List', 'mai-lists' ),
+				'fields' => [
+
+					/***********
+					 * General *
+					 ***********/
+
+					[
+						'key'   => 'mai_list_display_section',
+						'label' => __( 'Display', 'mai-lists' ),
+						'type'  => 'tab',
+					],
+					[
+						'key'           => 'mai_list_type',
+						'label'         => __( 'List Type', 'mai-lists' ),
+						'name'          => 'type',
+						'type'          => 'select',
+						'default_value' => 'ul',
+						'choices'       => [
+							'ul' => __( 'Icons', 'mai-lists' ),
+							'ol' => __( 'Numbers', 'mai-lists' ),
+						],
+					],
+					[
+						'key'     => 'mai_list_icon_clone',
+						'label'   => __( 'Icon', 'mai-lists' ),
+						'name'    => 'icon_clone',
+						'type'    => 'clone',
+						'display' => 'group', // 'group' or 'seamless'. 'group' allows direct return of actual field names via get_field( 'style' ).
+						'clone'   => [ 'mai_icon_style', 'mai_icon_choices', 'mai_icon_brand_choices' ],
+						'conditional_logic' => [
+							[
+								[
+									'field'          => 'mai_list_type',
+									'operator'       => '==',
+									'value'          => 'ul',
+								],
+							],
+						],
+					],
+					// [
+					// 	'key'            => 'mai_list_icon_color',
+					// 	'label'          => __( 'Color', 'mai-lists' ),
+					// 	'name'           => 'icon_color',
+					// 	'type'           => 'color_picker',
+					// 	'enable_opacity' => 0,
+					// 	'return_format'  => 'string',
+					// ],
+					[
+						'key'               => 'mai_list_icon_color_clone',
+						'label'             => __( 'Icon Color', 'mai-engine' ),
+						'name'              => 'icon_color_clone',
+						'type'              => 'clone',
+						'display'           => 'group', // 'group' or 'seamless'. 'group' allows direct return of actual field names via get_field( 'style' ).
+						'clone'             => [ 'mai_icon_color', 'mai_icon_color_custom' ],
+					],
+					[
+						'key'         => 'mai_list_icon_size',
+						'label'       => __( 'Icon Size', 'mai-lists' ),
+						'name'        => 'icon_size',
+						'type'        => 'number',
+						'placeholder' => '20',
+						'append'      => 'px',
+					],
+					[
+						'key'         => 'mai_list_icon_margin_top',
+						'label'       => __( 'Icon Margin Top', 'mai-lists' ),
+						'name'        => 'icon_margin_top',
+						'type'        => 'number',
+						'placeholder' => '2',
+						'append'      => 'px',
+					],
+					[
+						'key'         => 'mai_list_content_margin_top',
+						'label'       => __( 'Content Margin Top', 'mai-lists' ),
+						'name'        => 'content_margin_top',
+						'type'        => 'number',
+						'placeholder' => '0',
+						'append'      => 'px',
+					],
+					[
+						'key'           => 'mai_list_icon_gap',
+						'label'         => __( 'Icon Gap', 'mai-lists' ),
+						'name'          => 'icon_gap',
+						'type'          => 'select',
+						'default_value' => 'md',
+						'choices'       => [
+							'xs'   => __( 'XS', 'mai-lists' ),
+							'sm'   => __( 'S', 'mai-lists' ),
+							'md'   => __( 'M', 'mai-lists' ),
+							'lg'   => __( 'L', 'mai-lists' ),
+							'xl'   => __( 'XL', 'mai-lists' ),
+							'xxl'  => __( '2XL', 'mai-lists' ),
+						],
+					],
+
+					/**********
+					 * Layout *
+					 **********/
+
+					[
+						'key'   => 'mai_list_layout_section',
+						'label' => __( 'Layout', 'mai-lists' ),
+						'type'  => 'tab',
+					],
+					[
+						'key'          => 'mai_list_columns_clone',
+						'label'        => __( 'Columns', 'mai-lists' ),
+						'name'         => 'columns_clone',
+						'type'         => 'clone',
+						'display'      => 'group', // 'group' or 'seamless'. 'group' allows direct return of actual field names via get_field( 'style' ).
+						'clone'        => [
+							'mai_columns',
+							'mai_columns_responsive',
+							'mai_columns_md',
+							'mai_columns_sm',
+							'mai_columns_xs',
+							'mai_align_columns',
+							'mai_align_columns_vertical',
+							'mai_column_gap',
+							'mai_row_gap',
+							'mai_margin_top',
+							'mai_margin_bottom',
+						],
+					],
+				],
+				'location' => [
+					[
+						[
+							'param'    => 'block',
+							'operator' => '==',
+							'value'    => 'acf/mai-list',
+						],
+					],
+				],
+				'active' => true,
+			]
+		);
+
+		acf_add_local_field_group(
+			[
+				'key'       => 'mai_list_item_field_group',
+				'title'     => __( 'Mai List Item', 'mai-lists' ),
+				'fields'    => [
+					[
+						'key'               => 'mai_list_item_icon_clone',
+						'label'             => __( 'Icon', 'mai-lists' ),
+						'name'              => 'icon_clone',
+						'type'              => 'clone',
+						'display'           => 'group', // 'group' or 'seamless'. 'group' allows direct return of actual field names via get_field( 'style' ).
+						'clone'             => [ 'mai_icon_style', 'mai_icon_choices', 'mai_icon_brand_choices' ],
+					],
+					// [
+					// 	'key'            => 'mai_list_icon_color',
+					// 	'label'          => __( 'Color', 'mai-lists' ),
+					// 	'name'           => 'icon_color',
+					// 	'type'           => 'color_picker',
+					// 	'enable_opacity' => 0,
+					// 	'return_format'  => 'string',
+					// ],
+					[
+						'key'               => 'mai_list_item_icon_color_clone',
+						'label'             => __( 'Icon Color', 'mai-engine' ),
+						'name'              => 'icon_color_clone',
+						'type'              => 'clone',
+						'display'           => 'group', // 'group' or 'seamless'. 'group' allows direct return of actual field names via get_field( 'style' ).
+						'clone'             => [ 'mai_icon_color', 'mai_icon_color_custom' ],
+					],
+				],
+				'location' => [
+					[
+						[
+							'param'    => 'block',
+							'operator' => '==',
+							'value'    => 'acf/mai-list-item',
+						],
+					],
+				],
+				'active'  => true,
+			]
+		);
+	}
+
+	/**
+	 * Sets default icon.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param array $field The existing field array.
+	 *
+	 * @return array
+	 */
+	function load_list_icon( $field ) {
+		if ( ! ( isset( $field['sub_fields'] ) && $field['sub_fields'] ) ) {
+			return $fields;
+		}
+
+		foreach ( $field['sub_fields'] as $index => $sub_field ) {
+			if ( ! isset( $sub_field['key'] ) || 'mai_icon_choices' !== $sub_field['key'] ) {
+				continue;
+			}
+
+			$field['sub_fields'][ $index ]['default_value'] = 'check';
+		}
+
+		return $field;
+	}
+
+	/**
+	 * Remove default icon.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param array $field The existing field array.
+	 *
+	 * @return array
+	 */
+	function load_list_item_icon( $field ) {
+		if ( ! ( isset( $field['sub_fields'] ) && $field['sub_fields'] ) ) {
+			return $fields;
+		}
+
+		foreach ( $field['sub_fields'] as $index => $sub_field ) {
+			if ( ! isset( $sub_field['key'] ) || 'mai_icon_choices' !== $sub_field['key'] ) {
+				continue;
+			}
+
+			$field['sub_fields'][ $index ]['default_value'] = null;
+		}
+
+		return $field;
+	}
+
+	/**
+	 * Set default columns values.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param array $field The existing field array.
+	 *
+	 * @return array
+	 */
+	function load_list_columns( $field ) {
+		if ( ! ( isset( $field['sub_fields'] ) && $field['sub_fields'] ) ) {
+			return $fields;
+		}
+
+		foreach ( $field['sub_fields'] as $index => $sub_field ) {
+			if ( ! isset( $sub_field['key'] ) || empty( $sub_field['key'] ) ) {
+				continue;
+			}
+
+			switch ( $sub_field['key'] ) {
+				case 'mai_columns':
+					$field['sub_fields'][ $index ]['default_value'] = 1;
+					break;
+				case 'row_gap':
+					$field['sub_fields'][ $index ]['default_value'] = 'lg';
+				break;
+			}
+		}
+
+		return $field;
+	}
+}
