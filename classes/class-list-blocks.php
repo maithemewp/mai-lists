@@ -462,13 +462,43 @@ class Mai_List_Blocks {
 				case 'mai_columns':
 					$field['sub_fields'][ $index ]['default_value'] = 1;
 					break;
-				case 'row_gap':
-					$field['sub_fields'][ $index ]['default_value'] = 'lg';
+				case 'mai_column_gap':
+					$field['sub_fields'][ $index ]['type']          = 'select';
+					$field['sub_fields'][ $index ]['allow_null']    = 0;
+					$field['sub_fields'][ $index ]['multiple']      = 0;
+					$field['sub_fields'][ $index ]['ui']            = 0;
+					$field['sub_fields'][ $index ]['ajax']          = 0;
+					$field['sub_fields'][ $index ]['default_value'] = 'md';
+					$field['sub_fields'][ $index ]['choices']       = $this->get_gaps();
+				break;
+				case 'mai_row_gap':
+					$field['sub_fields'][ $index ]['type']          = 'select';
+					$field['sub_fields'][ $index ]['allow_null']    = 0;
+					$field['sub_fields'][ $index ]['multiple']      = 0;
+					$field['sub_fields'][ $index ]['ui']            = 0;
+					$field['sub_fields'][ $index ]['ajax']          = 0;
+					$field['sub_fields'][ $index ]['default_value'] = 'md';
+					$field['sub_fields'][ $index ]['choices']       = $this->get_gaps();
 				break;
 			}
 		}
 
 		return $field;
+	}
+
+	function get_gaps() {
+		return [
+			''     => __( 'None', 'mai-engine' ),
+			'xxxs' => __( '3XS', 'mai-engine' ),
+			'xxs'  => __( '2XS', 'mai-engine' ),
+			'xs'   => __( 'XS', 'mai-engine' ),
+			'sm'   => __( 'S', 'mai-engine' ),
+			'md'   => __( 'M', 'mai-engine' ),
+			'lg'   => __( 'L', 'mai-engine' ),
+			'xl'   => __( 'XL', 'mai-engine' ),
+			'xxl'  => __( '2XL', 'mai-engine' ),
+			'xxxl' => __( '3XL', 'mai-engine' ),
+		];
 	}
 
 	function get_list_svg_icon() {
