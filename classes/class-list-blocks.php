@@ -463,22 +463,10 @@ class Mai_List_Blocks {
 					$field['sub_fields'][ $index ]['default_value'] = 1;
 					break;
 				case 'mai_column_gap':
-					$field['sub_fields'][ $index ]['type']          = 'select';
-					$field['sub_fields'][ $index ]['allow_null']    = 0;
-					$field['sub_fields'][ $index ]['multiple']      = 0;
-					$field['sub_fields'][ $index ]['ui']            = 0;
-					$field['sub_fields'][ $index ]['ajax']          = 0;
-					$field['sub_fields'][ $index ]['default_value'] = 'md';
-					$field['sub_fields'][ $index ]['choices']       = $this->get_gaps();
+					$field['sub_fields'][ $index ] = $this->get_gap_values( $field['sub_fields'][ $index ] );
 				break;
 				case 'mai_row_gap':
-					$field['sub_fields'][ $index ]['type']          = 'select';
-					$field['sub_fields'][ $index ]['allow_null']    = 0;
-					$field['sub_fields'][ $index ]['multiple']      = 0;
-					$field['sub_fields'][ $index ]['ui']            = 0;
-					$field['sub_fields'][ $index ]['ajax']          = 0;
-					$field['sub_fields'][ $index ]['default_value'] = 'md';
-					$field['sub_fields'][ $index ]['choices']       = $this->get_gaps();
+					$field['sub_fields'][ $index ] = $this->get_gap_values( $field['sub_fields'][ $index ] );
 				break;
 			}
 		}
@@ -486,8 +474,14 @@ class Mai_List_Blocks {
 		return $field;
 	}
 
-	function get_gaps() {
-		return [
+	function get_gap_values( $field ) {
+		$field['type']          = 'select';
+		$field['allow_null']    = 0;
+		$field['multiple']      = 0;
+		$field['ui']            = 0;
+		$field['ajax']          = 0;
+		$field['default_value'] = 'md';
+		$field['choices']       = [
 			''     => __( 'None', 'mai-engine' ),
 			'xxxs' => __( '3XS', 'mai-engine' ),
 			'xxs'  => __( '2XS', 'mai-engine' ),
@@ -499,6 +493,8 @@ class Mai_List_Blocks {
 			'xxl'  => __( '2XL', 'mai-engine' ),
 			'xxxl' => __( '3XL', 'mai-engine' ),
 		];
+
+		return $field;
 	}
 
 	function get_list_svg_icon() {
