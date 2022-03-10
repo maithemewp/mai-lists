@@ -117,13 +117,10 @@ class Mai_List {
 		mai_enqueue_list_styles();
 
 		$atts = [
-			'class' => 'mai-list has-columns',
-			'style' => mai_get_columns_styles( $this->args ),
+			'class' => 'mai-list',
 		];
 
-		if ( $this->args['preview'] ) {
-			$atts['class'] = mai_add_classes( 'has-columns-nested', $atts['class'] ); // Temp workaround for ACF nested block markup.
-		}
+		$atts = mai_get_columns_atts( $atts, $this->args, true );
 
 		if ( $this->args['margin_top'] ) {
 			$atts['class'] = mai_add_classes( sprintf( 'has-%s-margin-top', $this->args['margin_top'] ), $atts['class'] );
