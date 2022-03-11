@@ -146,8 +146,8 @@ final class Mai_Lists_Plugin {
 	 * @return void
 	 */
 	public function hooks() {
-		add_action( 'admin_init',     [ $this, 'updater' ] );
-		add_action( 'plugins_loaded', [ $this, 'run' ] );
+		add_action( 'admin_init',        [ $this, 'updater' ] );
+		add_action( 'after_setup_theme', [ $this, 'run' ] ); // Plugins loaded is too early to check for engine version.
 	}
 
 	/**
@@ -194,14 +194,40 @@ final class Mai_Lists_Plugin {
 	/**
 	 * Runs plugin if Mai Engine is active.
 	 *
+	 * @since 0.1.0
+	 *
 	 * @return Mai_List_Blocks
+	 *
+	 * @return void
 	 */
 	public function run() {
 		if ( ! class_exists( 'Mai_Engine' ) ) {
+			add_action( 'admin_notices', [ $this, 'admin_notice' ] );
+			return;
+		}
+
+		if ( ! version_compare( mai_get_version(), '2.21', '>' ) ) {
+			add_action( 'admin_notices', [ $this, 'admin_notice' ] );
 			return;
 		}
 
 		new Mai_List_Blocks;
+	}
+
+	/**
+	 * Displays admin notice.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return void
+	 */
+	public function admin_notice() {
+		printf(
+			'<div class="notice notice-warning"><p>%s%s%s</p></div>',
+			__( 'Mai Lists requires ', 'mai-engine' ),
+			'Mai Engine',
+			__( ' plugin version 2.21.0 or later. Please install/upgrade now to use the Mai List block.', 'mai-engine' )
+		);
 	}
 }
 
