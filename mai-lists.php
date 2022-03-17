@@ -196,8 +196,6 @@ final class Mai_Lists_Plugin {
 	 *
 	 * @since 0.1.0
 	 *
-	 * @return Mai_List_Blocks
-	 *
 	 * @return void
 	 */
 	public function run() {
@@ -222,12 +220,7 @@ final class Mai_Lists_Plugin {
 	 * @return void
 	 */
 	public function admin_notice() {
-		printf(
-			'<div class="notice notice-warning"><p>%s%s%s</p></div>',
-			__( 'Mai Lists requires ', 'mai-engine' ),
-			'Mai Engine',
-			__( ' plugin version 2.21.0 or later. Please install/upgrade now to use the Mai List block.', 'mai-engine' )
-		);
+		printf( '<div class="notice notice-warning"><p>%s%s%s</p></div>', __( 'Mai Lists requires Mai Engine plugin version 2.21.0 or later. Please install/upgrade now to use the Mai List block.', 'mai-lists' ) );
 	}
 }
 
