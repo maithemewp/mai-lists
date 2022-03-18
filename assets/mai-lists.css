@@ -9,19 +9,49 @@
 
 .mai-list-item {
 	display: grid;
-	grid-template-columns: auto 1fr;
+	grid-template-columns: var(--grid-template-columns);
 	gap: var(--icon-gap, var(--spacing-md));
+	place-content: start;
 }
 
-.mai-list-item:not(:last-child) {
-	margin-bottom: var(--row-gap, 0px);
+/* define grid-template-columns independently for nested lists */
+.mai-list-start {
+	--grid-template-columns: auto 1fr;
+}
+
+.mai-list-top {
+	--grid-template-columns: 1fr;
+}
+
+.mai-list-icon-wrap,
+.mai-list-icon {
+	line-height: 1;
+}
+
+.mai-list-icon-wrap {
+	display: block;
+	margin-top: var(--icon-margin-top, 0px);
+	text-align: var(--icon-align, center);
+}
+
+.mai-list-icon {
+	display: inline-block;
+	padding: var(--icon-padding, unset);
+	background: var(--icon-background, unset);
+	border-radius: var(--icon-border-radius, unset);
+}
+
+.mai-list-icon::before {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .mai-list-content {
 	margin-top: var(--content-margin-top, 0px);
 }
 
-.mai-list-icons .mai-list-item::before {
+.mai-list-icons .mai-list-icon::before {
 	-webkit-mask-image: var(--icon, unset);
 	mask-image: var(--icon, unset);
 	-webkit-mask-position: center;
@@ -32,7 +62,6 @@
 	mask-size: contain;
 	width: var(--icon-size, 20px);
 	height: var(--icon-size, 20px);
-	margin-top: var(--icon-margin-top, 0px);
 	background: var(--icon-color, currentColor);
 	content: "";
 }
@@ -41,7 +70,9 @@
 	counter-increment: mai-list;
 }
 
-.mai-list-numbers .mai-list-item::before {
+.mai-list-numbers .mai-list-icon::before {
+	width: var(--icon-size, 20px);
+	height: var(--icon-size, 20px);
 	color: var(--icon-color, currentColor);
 	font-weight: var(--mai-list-number-font-weight, var(--heading-font-weight));
 	font-size: var(--icon-size, 36px);

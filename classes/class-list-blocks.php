@@ -82,11 +82,15 @@ class Mai_List_Blocks {
 			'preview'                => $is_preview,
 			'content'                => $this->get_list_inner_blocks(),
 			'type'                   => get_field( 'type' ),
+			'location'               => get_field( 'location' ),
 			'style'                  => get_field( 'style' ),
 			'icon'                   => get_field( 'icon' ),
 			'icon_brand'             => get_field( 'icon_brand' ),
 			'color_icon'             => get_field( 'color_icon' ),
+			'color_background'       => get_field( 'color_background' ),
 			'icon_size'              => get_field( 'icon_size' ),
+			'icon_padding'           => get_field( 'icon_padding' ),
+			'icon_border_radius'     => get_field( 'icon_border_radius' ),
 			'icon_margin_top'        => get_field( 'icon_margin_top' ),
 			'content_margin_top'     => get_field( 'content_margin_top' ),
 			'icon_gap'               => get_field( 'icon_gap' ),
@@ -133,12 +137,13 @@ class Mai_List_Blocks {
 	 */
 	function do_list_item( $block, $content = '', $is_preview = false ) {
 		$args = [
-			'preview'    => $is_preview,
-			'content'    => $this->get_list_item_inner_blocks(),
-			'style'      => get_field( 'style' ),
-			'icon'       => get_field( 'icon' ),
-			'icon_brand' => get_field( 'icon_brand' ),
-			'color_icon' => get_field( 'color_icon' ),
+			'preview'          => $is_preview,
+			'content'          => $this->get_list_item_inner_blocks(),
+			'style'            => get_field( 'style' ),
+			'icon'             => get_field( 'icon' ),
+			'icon_brand'       => get_field( 'icon_brand' ),
+			'color_icon'       => get_field( 'color_icon' ),
+			'color_background' => get_field( 'color_background' ),
 		];
 
 		// Swap for brand.
@@ -222,20 +227,44 @@ class Mai_List_Blocks {
 						'key'           => 'mai_list_type',
 						'label'         => __( 'List Type', 'mai-lists' ),
 						'name'          => 'type',
-						'type'          => 'select',
+						// 'type'          => 'select',
+						'type'          => 'button_group',
 						'default_value' => 'ul',
 						'choices'       => [
 							'ul' => __( 'Icons', 'mai-lists' ),
 							'ol' => __( 'Numbers', 'mai-lists' ),
 						],
+						'wrapper' => [
+							'class' => 'mai-acf-button-group mai-acf-button-group-small',
+						],
 					],
 					[
-						'key'     => 'mai_list_icon_clone',
-						'label'   => __( 'Icon', 'mai-lists' ),
-						'name'    => 'icon_clone',
-						'type'    => 'clone',
-						'display' => 'group', // 'group' or 'seamless'. 'group' allows direct return of actual field names via get_field( 'style' ).
-						'clone'   => [ 'mai_icon_style', 'mai_icon_choices', 'mai_icon_brand_choices' ],
+						'key'           => 'mai_list_location',
+						'label'         => __( 'Icon Location', 'mai-lists' ),
+						'name'          => 'location',
+						// 'type'          => 'select',
+						'type'          => 'button_group',
+						'default_value' => 'start',
+						'choices'       => [
+							'start'      => __( 'Default', 'mai-lists' ),
+							'top-start'  => __( 'Start', 'mai-lists' ),
+							'top-center' => __( 'Center', 'mai-lists' ),
+							'top-end'    => __( 'Right', 'mai-lists' ),
+							// 'top-start'  => __( 'Top<br>Start', 'mai-lists' ),
+							// 'top-center' => __( 'Top<br>Center', 'mai-lists' ),
+							// 'top-end'    => __( 'Top<br>End', 'mai-lists' ),
+						],
+						'wrapper' => [
+							'class' => 'mai-acf-button-group mai-acf-button-group-small',
+						],
+					],
+					[
+						'key'               => 'mai_list_icon_clone',
+						'label'             => __( 'Icon', 'mai-lists' ),
+						'name'              => 'icon_clone',
+						'type'              => 'clone',
+						'display'           => 'group', // 'group' or 'seamless'. 'group' allows direct return of actual field names via get_field( 'style' ).
+						'clone'             => [ 'mai_icon_style', 'mai_icon_choices', 'mai_icon_brand_choices' ],
 						'conditional_logic' => [
 							[
 								[
@@ -246,21 +275,13 @@ class Mai_List_Blocks {
 							],
 						],
 					],
-					// [
-					// 	'key'            => 'mai_list_icon_color',
-					// 	'label'          => __( 'Color', 'mai-lists' ),
-					// 	'name'           => 'icon_color',
-					// 	'type'           => 'color_picker',
-					// 	'enable_opacity' => 0,
-					// 	'return_format'  => 'string',
-					// ],
 					[
 						'key'               => 'mai_list_icon_color_clone',
 						'label'             => __( 'Icon Color', 'mai-engine' ),
 						'name'              => 'icon_color_clone',
 						'type'              => 'clone',
 						'display'           => 'group', // 'group' or 'seamless'. 'group' allows direct return of actual field names via get_field( 'style' ).
-						'clone'             => [ 'mai_icon_color', 'mai_icon_color_custom' ],
+						'clone'             => [ 'mai_icon_color', 'mai_icon_color_custom', 'mai_icon_background', 'mai_icon_background_custom' ],
 					],
 					[
 						'key'         => 'mai_list_icon_size',
@@ -271,20 +292,20 @@ class Mai_List_Blocks {
 						'append'      => 'px',
 					],
 					[
-						'key'         => 'mai_list_icon_margin_top',
-						'label'       => __( 'Icon Margin Top', 'mai-lists' ),
-						'name'        => 'icon_margin_top',
-						'type'        => 'number',
-						'placeholder' => '2',
-						'append'      => 'px',
-					],
-					[
-						'key'         => 'mai_list_content_margin_top',
-						'label'       => __( 'Content Margin Top', 'mai-lists' ),
-						'name'        => 'content_margin_top',
+						'key'         => 'mai_list_icon_padding',
+						'label'       => __( 'Icon Padding', 'mai-lists' ),
+						'name'        => 'icon_padding',
 						'type'        => 'number',
 						'placeholder' => '0',
 						'append'      => 'px',
+					],
+					[
+						'key'               => 'mai_list_icon_border_radius',
+						'label'             => __( 'Icon Border Radius', 'mai-lists' ),
+						'name'              => 'icon_border_radius',
+						'type'              => 'number',
+						'placeholder'       => '0',
+						'append'            => 'px',
 					],
 					[
 						'key'           => 'mai_list_icon_gap',
@@ -300,6 +321,40 @@ class Mai_List_Blocks {
 							'lg'  => __( 'L', 'mai-lists' ),
 							'xl'  => __( 'XL', 'mai-lists' ),
 							'xxl' => __( '2XL', 'mai-lists' ),
+						],
+					],
+					[
+						'key'               => 'mai_list_icon_margin_top',
+						'label'             => __( 'Icon Margin Top', 'mai-lists' ),
+						'name'              => 'icon_margin_top',
+						'type'              => 'number',
+						'placeholder'       => '2',
+						'append'            => 'px',
+						'conditional_logic' => [
+							[
+								[
+									'field'          => 'mai_list_location',
+									'operator'       => '==',
+									'value'          => 'start',
+								],
+							],
+						],
+					],
+					[
+						'key'               => 'mai_list_content_margin_top',
+						'label'             => __( 'Content Margin Top', 'mai-lists' ),
+						'name'              => 'content_margin_top',
+						'type'              => 'number',
+						'placeholder'       => '0',
+						'append'            => 'px',
+						'conditional_logic' => [
+							[
+								[
+									'field'          => 'mai_list_location',
+									'operator'       => '==',
+									'value'          => 'start',
+								],
+							],
 						],
 					],
 
@@ -359,21 +414,13 @@ class Mai_List_Blocks {
 						'display'           => 'group', // 'group' or 'seamless'. 'group' allows direct return of actual field names via get_field( 'style' ).
 						'clone'             => [ 'mai_icon_style', 'mai_icon_choices', 'mai_icon_brand_choices' ],
 					],
-					// [
-					// 	'key'            => 'mai_list_icon_color',
-					// 	'label'          => __( 'Color', 'mai-lists' ),
-					// 	'name'           => 'icon_color',
-					// 	'type'           => 'color_picker',
-					// 	'enable_opacity' => 0,
-					// 	'return_format'  => 'string',
-					// ],
 					[
 						'key'               => 'mai_list_item_icon_color_clone',
 						'label'             => __( 'Icon Color', 'mai-engine' ),
 						'name'              => 'icon_color_clone',
 						'type'              => 'clone',
 						'display'           => 'group', // 'group' or 'seamless'. 'group' allows direct return of actual field names via get_field( 'style' ).
-						'clone'             => [ 'mai_icon_color', 'mai_icon_color_custom' ],
+						'clone'             => [ 'mai_icon_color', 'mai_icon_color_custom', 'mai_icon_background', 'mai_icon_background_custom' ],
 					],
 				],
 				'location' => [
@@ -430,11 +477,20 @@ class Mai_List_Blocks {
 		}
 
 		foreach ( $field['sub_fields'] as $index => $sub_field ) {
-			if ( ! isset( $sub_field['key'] ) || 'mai_icon_choices' !== $sub_field['key'] ) {
+			if ( ! isset( $sub_field['key'] ) ) {
 				continue;
+
 			}
 
-			$field['sub_fields'][ $index ]['default_value'] = null;
+			// Can't add an empty default because we can't pass it from the list to the list item.
+			// if ( 'mai_icon_style' === $sub_field['key'] ) {
+			// 	$field['sub_fields'][ $index ]['default_value'] = '';
+			// 	$field['sub_fields'][ $index ]['choices']       = array_merge( [ '' => __( 'Default', 'mai-lists' ) ], $field['sub_fields'][ $index ]['choices'] );
+			// }
+
+			if ( 'mai_icon_choices' === $sub_field['key'] ) {
+				$field['sub_fields'][ $index ]['default_value'] = null;
+			}
 		}
 
 		return $field;

@@ -29,12 +29,13 @@ class Mai_List_Item {
 	 */
 	function get_defaults() {
 		return [
-			'preview'    => false,
-			'style'      => '',
-			'icon'       => '',
-			'color_icon' => '',
-			'content'    => '',
-			'class'      => '',
+			'preview'          => false,
+			'style'            => '',
+			'icon'             => '',
+			'color_icon'       => '',
+			'color_background' => '',
+			'content'          => '',
+			'class'            => '',
 		];
 	}
 
@@ -46,12 +47,13 @@ class Mai_List_Item {
 	 * @return void
 	 */
 	function get_sanitized_args( $args ) {
-		$args['preview']    = mai_sanitize_bool( $args['preview'] );
-		$args['style']      = esc_html( $args['style'] );
-		$args['icon']       = esc_html( $args['icon'] );
-		$args['color_icon'] = esc_html( $args['color_icon'] );
-		$args['content']    = $args['content'];
-		$args['class']      = esc_attr( $args['class'] );
+		$args['preview']          = mai_sanitize_bool( $args['preview'] );
+		$args['style']            = esc_html( $args['style'] );
+		$args['icon']             = esc_html( $args['icon'] );
+		$args['color_icon']       = esc_html( $args['color_icon'] );
+		$args['color_background'] = esc_html( $args['color_background'] );
+		$args['content']          = $args['content'];
+		$args['class']            = esc_attr( $args['class'] );
 
 		return $args;
 	}
@@ -89,12 +91,16 @@ class Mai_List_Item {
 			$atts['style'] .= sprintf( '--icon-color:%s;', mai_get_color_css( $this->args['color_icon'] ) );
 		}
 
+		if ( $this->args['color_background'] ) {
+			$atts['style'] .= sprintf( '--icon-background:%s;', mai_get_color_css( $this->args['color_background'] ) );
+		}
+
 		return genesis_markup(
 			[
 				'open'    => '<li %s>',
 				'close'   => '</li>',
 				'context' => 'mai-list-item',
-				'content' => sprintf( '<div class="mai-list-content">%s</div>', $this->args['content'] ),
+				'content' => sprintf( '<span class="mai-list-icon-wrap" role="presentation"><span class="mai-list-icon"></span></span><div class="mai-list-content">%s</div>', $this->args['content'] ),
 				'echo'    => false,
 				'atts'    => $atts,
 			]
