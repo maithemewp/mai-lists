@@ -3,7 +3,7 @@
 /**
  * Plugin Name:     Mai Lists
  * Plugin URI:      https://bizbudding.com/mai-design-pack/
- * Description:     Custom block for and icons and nexted blocks to lists.
+ * Description:     Simple and beautiful icon lists and responsive icon feature grids.
  * Version:         0.1.0
  *
  * Author:          BizBudding
@@ -220,7 +220,7 @@ final class Mai_Lists_Plugin {
 	 * @return void
 	 */
 	public function admin_notice() {
-		printf( '<div class="notice notice-warning"><p>%s%s%s</p></div>', __( 'Mai Lists requires Mai Engine plugin version 2.21.0 or later. Please install/upgrade now to use the Mai List block.', 'mai-lists' ) );
+		printf( '<div class="notice notice-warning"><p>%s</p></div>', __( 'Mai Lists requires Mai Engine plugin version 2.21.0 or later. Please install/upgrade now to use the Mai List block.', 'mai-lists' ) );
 	}
 }
 
