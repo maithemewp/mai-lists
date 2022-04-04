@@ -247,7 +247,7 @@ class Mai_List_Blocks {
 							'start'      => __( 'Default', 'mai-lists' ),
 							'top-start'  => __( 'Start', 'mai-lists' ),
 							'top-center' => __( 'Center', 'mai-lists' ),
-							'top-end'    => __( 'Right', 'mai-lists' ),
+							'top-end'    => __( 'End', 'mai-lists' ),
 						],
 						'wrapper' => [
 							'class' => 'mai-acf-button-group mai-acf-button-group-small',
