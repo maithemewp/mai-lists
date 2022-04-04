@@ -1,2 +1,2 @@
 # Mai Lists
-Custom lists with icons, numbers, colors, and spacing.
+Create simple and beautiful icon or numbered lists and responsive icon feature grids.

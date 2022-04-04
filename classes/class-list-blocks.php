@@ -35,7 +35,7 @@ class Mai_List_Blocks {
 			[
 				'name'            => 'mai-list',
 				'title'           => __( 'Mai List', 'mai-lists' ),
-				'description'     => __( 'A custom list block.', 'mai-lists' ),
+				'description'     => __( 'Simple and beautiful icon or numbered lists and responsive icon feature grids.', 'mai-lists' ),
 				'render_callback' => [ $this, 'do_list' ],
 				'category'        => 'widget',
 				'keywords'        => [ 'list', 'number' ],
@@ -56,7 +56,7 @@ class Mai_List_Blocks {
 			[
 				'name'            => 'mai-list-item',
 				'title'           => __( 'Mai List Item', 'mai-lists' ),
-				'description'     => __( 'A custom list item block.', 'mai-lists' ),
+				'description'     => __( 'A list item in for Mai List block.', 'mai-lists' ),
 				'render_callback' => [ $this, 'do_list_item' ],
 				'category'        => 'widget',
 				'icon'            => $this->get_list_item_svg_icon(),
@@ -227,7 +227,6 @@ class Mai_List_Blocks {
 						'key'           => 'mai_list_type',
 						'label'         => __( 'List Type', 'mai-lists' ),
 						'name'          => 'type',
-						// 'type'          => 'select',
 						'type'          => 'button_group',
 						'default_value' => 'ul',
 						'choices'       => [
@@ -242,7 +241,6 @@ class Mai_List_Blocks {
 						'key'           => 'mai_list_location',
 						'label'         => __( 'Icon Location', 'mai-lists' ),
 						'name'          => 'location',
-						// 'type'          => 'select',
 						'type'          => 'button_group',
 						'default_value' => 'start',
 						'choices'       => [
@@ -250,9 +248,6 @@ class Mai_List_Blocks {
 							'top-start'  => __( 'Start', 'mai-lists' ),
 							'top-center' => __( 'Center', 'mai-lists' ),
 							'top-end'    => __( 'Right', 'mai-lists' ),
-							// 'top-start'  => __( 'Top<br>Start', 'mai-lists' ),
-							// 'top-center' => __( 'Top<br>Center', 'mai-lists' ),
-							// 'top-end'    => __( 'Top<br>End', 'mai-lists' ),
 						],
 						'wrapper' => [
 							'class' => 'mai-acf-button-group mai-acf-button-group-small',
@@ -328,7 +323,7 @@ class Mai_List_Blocks {
 						'label'             => __( 'Icon Margin Top', 'mai-lists' ),
 						'name'              => 'icon_margin_top',
 						'type'              => 'number',
-						'placeholder'       => '2',
+						'placeholder'       => '0',
 						'append'            => 'px',
 						'conditional_logic' => [
 							[
@@ -479,7 +474,6 @@ class Mai_List_Blocks {
 		foreach ( $field['sub_fields'] as $index => $sub_field ) {
 			if ( ! isset( $sub_field['key'] ) ) {
 				continue;
-
 			}
 
 			// Can't add an empty default because we can't pass it from the list to the list item.
@@ -531,6 +525,15 @@ class Mai_List_Blocks {
 		return $field;
 	}
 
+	/**
+	 * Gets gap values.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param array $field The existing field array.
+	 *
+	 * @return array
+	 */
 	function get_gap_values( $field ) {
 		$field['type']          = 'select';
 		$field['allow_null']    = 0;
@@ -554,10 +557,24 @@ class Mai_List_Blocks {
 		return $field;
 	}
 
+	/**
+	 * Gets list block svg icon.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return string
+	 */
 	function get_list_svg_icon() {
 		return '<svg role="img" aria-hidden="true" focusable="false" style="display:block;" width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g><path d="M4,17.5c0,-0.276 -0.224,-0.5 -0.5,-0.5l-1,0c-0.276,0 -0.5,0.224 -0.5,0.5l0,1c0,0.276 0.224,0.5 0.5,0.5l1,0c0.276,0 0.5,-0.224 0.5,-0.5l0,-1Z" style="fill:#231f20;"/><path d="M22,17.5c0,-0.276 -0.224,-0.5 -0.5,-0.5l-15,0c-0.276,0 -0.5,0.224 -0.5,0.5l0,1c0,0.276 0.224,0.5 0.5,0.5l15,0c0.276,0 0.5,-0.224 0.5,-0.5l0,-1Z" style="fill:#231f20;"/></g><g><path d="M4,11.5c0,-0.276 -0.224,-0.5 -0.5,-0.5l-1,0c-0.276,0 -0.5,0.224 -0.5,0.5l0,1c0,0.276 0.224,0.5 0.5,0.5l1,0c0.276,0 0.5,-0.224 0.5,-0.5l0,-1Z" style="fill:#231f20;"/><path d="M22,11.5c0,-0.276 -0.224,-0.5 -0.5,-0.5l-15,0c-0.276,0 -0.5,0.224 -0.5,0.5l0,1c0,0.276 0.224,0.5 0.5,0.5l15,0c0.276,0 0.5,-0.224 0.5,-0.5l0,-1Z" style="fill:#231f20;"/></g><g><path d="M4,5.5c0,-0.276 -0.224,-0.5 -0.5,-0.5l-1,0c-0.276,0 -0.5,0.224 -0.5,0.5l0,1c0,0.276 0.224,0.5 0.5,0.5l1,0c0.276,0 0.5,-0.224 0.5,-0.5l0,-1Z" style="fill:#231f20;"/><path d="M22,5.5c0,-0.276 -0.224,-0.5 -0.5,-0.5l-15,0c-0.276,0 -0.5,0.224 -0.5,0.5l-0,1c-0,0.276 0.224,0.5 0.5,0.5l15,0c0.276,0 0.5,-0.224 0.5,-0.5l0,-1Z" style="fill:#231f20;"/></g></svg>';
 	}
 
+	/**
+	 * Gets list item block svg icon.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return string
+	 */
 	function get_list_item_svg_icon() {
 		return '<svg role="img" aria-hidden="true" focusable="false" style="display:block;" width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g><path d="M22,17.5c-0,-0.276 -0.224,-0.5 -0.5,-0.5l-3.5,0c-0.276,0 -0.5,0.224 -0.5,0.5l0,1c0,0.276 0.224,0.5 0.5,0.5l3.5,0c0.276,0 0.5,-0.224 0.5,-0.5l-0,-1Z" style="fill:#231f20;"/><path d="M16,17.5c0,-0.276 -0.224,-0.5 -0.5,-0.5l-3.5,0c-0.276,0 -0.5,0.224 -0.5,0.5l0,1c0,0.276 0.224,0.5 0.5,0.5l3.5,0c0.276,0 0.5,-0.224 0.5,-0.5l0,-1Z" style="fill:#231f20;"/><path d="M10.5,17.5c0,-0.276 -0.224,-0.5 -0.5,-0.5l-3.5,0c-0.276,0 -0.5,0.224 -0.5,0.5l0,1c0,0.276 0.224,0.5 0.5,0.5l3.5,0c0.276,0 0.5,-0.224 0.5,-0.5l0,-1Z" style="fill:#231f20;"/><path d="M4,17.5c0,-0.276 -0.224,-0.5 -0.5,-0.5l-1,0c-0.276,0 -0.5,0.224 -0.5,0.5l0,1c0,0.276 0.224,0.5 0.5,0.5l1,0c0.276,0 0.5,-0.224 0.5,-0.5l0,-1Z" style="fill:#231f20;"/></g><g><path d="M4,5.5c0,-0.276 -0.224,-0.5 -0.5,-0.5l-1,0c-0.276,0 -0.5,0.224 -0.5,0.5l0,1c0,0.276 0.224,0.5 0.5,0.5l1,0c0.276,0 0.5,-0.224 0.5,-0.5l0,-1Z" style="fill:#231f20;"/><path d="M22,5.5c0,-0.276 -0.224,-0.5 -0.5,-0.5l-15,0c-0.276,0 -0.5,0.224 -0.5,0.5l-0,1c-0,0.276 0.224,0.5 0.5,0.5l15,0c0.276,0 0.5,-0.224 0.5,-0.5l0,-1Z" style="fill:#231f20;"/></g><g><path d="M22,11.5c0,-0.276 -0.224,-0.5 -0.5,-0.5l-3.5,0c-0.276,0 -0.5,0.224 -0.5,0.5l0,1c0,0.276 0.224,0.5 0.5,0.5l3.5,0c0.276,0 0.5,-0.224 0.5,-0.5l0,-1Z" style="fill:#231f20;"/><path d="M16,11.5c0,-0.276 -0.224,-0.5 -0.5,-0.5l-3.5,0c-0.276,0 -0.5,0.224 -0.5,0.5l0,1c0,0.276 0.224,0.5 0.5,0.5l3.5,0c0.276,0 0.5,-0.224 0.5,-0.5l0,-1Z" style="fill:#231f20;"/><path d="M10.5,11.5c0,-0.276 -0.224,-0.5 -0.5,-0.5l-3.5,0c-0.276,0 -0.5,0.224 -0.5,0.5l0,1c0,0.276 0.224,0.5 0.5,0.5l3.5,0c0.276,0 0.5,-0.224 0.5,-0.5l0,-1Z" style="fill:#231f20;"/><path d="M4,11.5c0,-0.276 -0.224,-0.5 -0.5,-0.5l-1,0c-0.276,0 -0.5,0.224 -0.5,0.5l0,1c0,0.276 0.224,0.5 0.5,0.5l1,0c0.276,0 0.5,-0.224 0.5,-0.5l0,-1Z" style="fill:#231f20;"/></g></svg>';
 	}

@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.1
+* Fixed: Margin top placeholder did not match default value.
+
 ## 0.2.0
 * Fixed: Missing description and error when activating when Mai Engine is too old.
 

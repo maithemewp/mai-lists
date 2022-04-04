@@ -4,7 +4,7 @@
  * Plugin Name:     Mai Lists
  * Plugin URI:      https://bizbudding.com/mai-design-pack/
  * Description:     Simple and beautiful icon lists and responsive icon feature grids.
- * Version:         0.2.0
+ * Version:         0.2.1
  *
  * Author:          BizBudding
  * Author URI:      https://bizbudding.com
@@ -89,7 +89,7 @@ final class Mai_Lists_Plugin {
 
 		// Plugin version.
 		if ( ! defined( 'MAI_LISTS_VERSION' ) ) {
-			define( 'MAI_LISTS_VERSION', '0.2.0' );
+			define( 'MAI_LISTS_VERSION', '0.2.1' );
 		}
 
 		// Plugin Folder Path.
