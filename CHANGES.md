@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.2
+* Changed: Updated labels and description.
+
 ## 0.2.1
 * Fixed: Margin top placeholder did not match default value.
 
