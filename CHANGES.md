@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.0 (7/20/22)
+* Changed: Load block styles the v2 API method.
+
 ## 0.2.2
 * Changed: Updated labels and description.
 

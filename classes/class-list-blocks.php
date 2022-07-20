@@ -23,7 +23,7 @@ class Mai_List_Blocks {
 	/**
 	 * Registers styles so they can easily be enqueued in blocks, classes, and helper functions.
 	 *
-	 * @since TBD
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
