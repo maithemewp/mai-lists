@@ -123,7 +123,7 @@ class Mai_List {
 			return;
 		}
 
-		mai_enqueue_list_styles();
+		wp_enqueue_style( 'mai-lists' );
 
 		$atts = [
 			'class' => 'mai-list',

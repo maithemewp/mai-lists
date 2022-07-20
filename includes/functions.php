@@ -34,18 +34,6 @@ function mai_get_list_item( $args, $icon = 'check', $style = 'light' ) {
 }
 
 /**
- * Enqueues list styles.
- *
- * @since 0.1.0
- *
- * @return void
- */
-function mai_enqueue_list_styles() {
-	$suffix = mai_lists_get_suffix();
-	wp_enqueue_style( 'mai-list', MAI_LISTS_PLUGIN_URL . sprintf( 'assets/mai-lists%s.css', $suffix ), [], MAI_LISTS_VERSION . '.' . date( 'njYHi', filemtime( MAI_LISTS_PLUGIN_DIR . sprintf( 'assets/mai-lists%s.css', $suffix ) ) ) );
-}
-
-/**
  * Gets the script/style `.min` suffix for minified files.
  *
  * @since 0.1.0
@@ -63,4 +51,18 @@ function mai_lists_get_suffix() {
 	$suffix = $debug ? '' : '.min';
 
 	return $suffix;
+}
+
+/**
+ * Enqueues list styles.
+ *
+ * @deprecated
+ *
+ * @since 0.1.0
+ *
+ * @return void
+ */
+function mai_enqueue_list_styles() {
+	$suffix = mai_lists_get_suffix();
+	wp_enqueue_style( 'mai-list', MAI_LISTS_PLUGIN_URL . sprintf( 'assets/mai-lists%s.css', $suffix ), [], MAI_LISTS_VERSION . '.' . date( 'njYHi', filemtime( MAI_LISTS_PLUGIN_DIR . sprintf( 'assets/mai-lists%s.css', $suffix ) ) ) );
 }
