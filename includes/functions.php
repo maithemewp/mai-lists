@@ -52,17 +52,3 @@ function mai_lists_get_suffix() {
 
 	return $suffix;
 }
-
-/**
- * Enqueues list styles.
- *
- * @deprecated
- *
- * @since 0.1.0
- *
- * @return void
- */
-function mai_enqueue_list_styles() {
-	$suffix = mai_lists_get_suffix();
-	wp_enqueue_style( 'mai-list', MAI_LISTS_PLUGIN_URL . sprintf( 'assets/mai-lists%s.css', $suffix ), [], MAI_LISTS_VERSION . '.' . date( 'njYHi', filemtime( MAI_LISTS_PLUGIN_DIR . sprintf( 'assets/mai-lists%s.css', $suffix ) ) ) );
-}

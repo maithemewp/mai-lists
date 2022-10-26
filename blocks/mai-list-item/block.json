@@ -1,0 +1,16 @@
+{
+  "name": "acf/mai-list-item",
+  "title": "Mai List Item",
+  "description": "A list item in for Mai List block.",
+  "category": "widgets",
+  "textdomain": "mai-lists",
+  "acf": {
+    "mode": "preview",
+    "renderCallback": "mai_do_list_item_block"
+  },
+  "supports": {
+    "align": false,
+    "alignText": false,
+    "anchor": false
+  }
+}

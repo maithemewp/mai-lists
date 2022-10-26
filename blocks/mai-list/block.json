@@ -1,0 +1,20 @@
+{
+  "name": "acf/mai-list",
+  "title": "Mai List",
+  "description": "Simple and beautiful icon or numbered lists and responsive icon feature grids.",
+  "category": "widgets",
+  "keywords":[ "list", "number" ],
+  "textdomain": "mai-lists",
+  "style": "",
+  "script": "",
+  "editorStyle": "file:./../../assets/mai-lists.min.css",
+  "acf": {
+    "mode": "preview",
+    "renderCallback": "mai_do_list_block"
+  },
+  "supports": {
+    "align": [ "wide", "full" ],
+    "alignText": false,
+    "anchor": true
+  }
+}

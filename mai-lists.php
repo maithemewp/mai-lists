@@ -86,7 +86,6 @@ final class Mai_Lists_Plugin {
 	 * @return  void
 	 */
 	private function setup_constants() {
-
 		// Plugin version.
 		if ( ! defined( 'MAI_LISTS_VERSION' ) ) {
 			define( 'MAI_LISTS_VERSION', '1.0.0' );
@@ -137,6 +136,9 @@ final class Mai_Lists_Plugin {
 		foreach ( glob( MAI_LISTS_CLASSES_DIR . '*.php' ) as $file ) { include $file; }
 		// Includes.
 		foreach ( glob( MAI_LISTS_INCLUDES_DIR . '*.php' ) as $file ) { include $file; }
+		// Blocks.
+		include MAI_LISTS_PLUGIN_DIR . 'blocks/mai-list/block.php';
+		include MAI_LISTS_PLUGIN_DIR . 'blocks/mai-list-item/block.php';
 	}
 
 	/**
@@ -204,7 +206,7 @@ final class Mai_Lists_Plugin {
 			return;
 		}
 
-		if ( ! version_compare( mai_get_version(), '2.21', '>' ) ) {
+		if ( ! function_exists( 'mai_get_version' ) || ! version_compare( mai_get_version(), '2.21', '>' ) ) {
 			add_action( 'admin_notices', [ $this, 'admin_notice' ] );
 			return;
 		}
