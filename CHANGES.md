@@ -1,7 +1,12 @@
 # Changelog
 
+## 1.1.0 (10/27/22)
+* Fixed: Editor styles more closely match the front end.
+* Fixed: Better compatibility with columns changes in Mai Engine.
+* Fixed: Finalize new block.json method for registering blocks.
+
 ## 1.0.0 (7/20/22)
-* Changed: Load block styles the v2 API method.
+* Changed: Load block styles with the v2 API method.
 
 ## 0.2.2
 * Changed: Updated labels and description.
