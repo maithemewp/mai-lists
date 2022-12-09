@@ -68,7 +68,7 @@ function mai_register_list_block() {
  *
  * @return void
  */
-function mai_do_list_block( $attributes, $content = '', $is_preview = false, $post_id = 0, $wp_block, $context ) {
+function mai_do_list_block( $attributes, $content, $is_preview, $post_id, $wp_block, $context ) {
 	$allowed  = [ 'acf/mai-list-item' ];
 	$template = [ [ 'acf/mai-list-item', [], [] ] ];
 	$inner    = sprintf( '<InnerBlocks allowedBlocks="%s" template="%s" />', esc_attr( wp_json_encode( $allowed ) ), esc_attr( wp_json_encode( $template ) ) );
