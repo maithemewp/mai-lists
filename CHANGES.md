@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.1 (1/19/23)
+* Fixed: Required parameter follows optional parameter error.
+
 ## 1.1.0 (10/27/22)
 * Fixed: Editor styles more closely match the front end.
 * Fixed: Better compatibility with columns changes in Mai Engine.
