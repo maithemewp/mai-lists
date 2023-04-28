@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.2 (4/28/23)
+* Fixed: CSS not loading on front end in some scenarios.
+
 ## 1.1.1 (1/19/23)
 * Fixed: Required parameter follows optional parameter error.
 

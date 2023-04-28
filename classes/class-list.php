@@ -237,10 +237,14 @@ class Mai_List {
 			return '';
 		}
 
-		$suffix = mai_lists_get_suffix();
-		$src    = MAI_LISTS_PLUGIN_URL . sprintf( 'assets/mai-lists%s.css', $suffix ) . '?ver=' . MAI_LISTS_VERSION . '.' . date( 'njYHi', filemtime( MAI_LISTS_PLUGIN_DIR . sprintf( 'assets/mai-lists%s.css', $suffix ) ) );
-		$html   = sprintf( '<link rel="stylesheet" href="%s">', esc_url( $src ) );
-		$loaded = true;
+		$html = '';
+
+		if ( ! is_admin() && did_action( 'wp_print_styles' ) ) {
+			$suffix = mai_lists_get_suffix();
+			$src    = MAI_LISTS_PLUGIN_URL . sprintf( 'assets/mai-lists%s.css', $suffix ) . '?ver=' . MAI_LISTS_VERSION . '.' . date( 'njYHi', filemtime( MAI_LISTS_PLUGIN_DIR . sprintf( 'assets/mai-lists%s.css', $suffix ) ) );
+			$html   = sprintf( '<link rel="stylesheet" href="%s">', esc_url( $src ) );
+			$loaded = true;
+		}
 
 		return $html;
 	}
