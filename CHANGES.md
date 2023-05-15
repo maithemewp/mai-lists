@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.3 (5/15/23)
+* Fixed: Mai List Item block wasn't correctly requiring Mai List as the parent block.
+
 ## 1.1.2 (4/28/23)
 * Fixed: CSS not loading on front end in some scenarios.
 
