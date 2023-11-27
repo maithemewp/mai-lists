@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.4 (11/27/23)
+Changed: Updated updater.
+
 ## 1.1.3 (5/15/23)
 * Fixed: Mai List Item block wasn't correctly requiring Mai List as the parent block.
 
