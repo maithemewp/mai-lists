@@ -1,10 +1,8 @@
 .mai-list {
-	line-height: 1.5;
-	--list-margin: 0;
-	--list-padding: 0;
-	--list-item-margin: 0;
-	--sub-list-margin: 0;
+	--sub-list-margin: var(--list-margin, var(--list-margin-top, 0) var(--list-margin-right, 0) var(--list-margin-bottom, var(--spacing-xs)) var(--list-margin-left, 0));
 	--paragraph-margin-bottom: var(--spacing-xs);
+	margin: 0;
+	line-height: 1.5;
 }
 
 .mai-list-item {
@@ -12,6 +10,7 @@
 	grid-template-columns: var(--grid-template-columns);
 	gap: var(--icon-gap, var(--spacing-md));
 	place-content: start;
+	margin: 0;
 }
 
 /* define grid-template-columns independently for nested lists */
