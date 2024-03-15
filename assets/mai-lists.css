@@ -28,7 +28,8 @@
 }
 
 .mai-list-icon-wrap {
-	display: block;
+	display: grid;
+	place-items: center;
 	margin-top: var(--icon-margin-top, 0px);
 	text-align: var(--icon-align, center);
 }
