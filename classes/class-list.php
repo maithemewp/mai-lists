@@ -204,8 +204,7 @@ class Mai_List {
 			}
 		}
 
-		$html  = $this->get_css();
-		$html .= genesis_markup(
+		$html = genesis_markup(
 			[
 				'open'    => "<{$type} %s>",
 				'close'   => "</{$type}>",
@@ -215,36 +214,6 @@ class Mai_List {
 				'atts'    => $atts,
 			]
 		);
-
-		return $html;
-	}
-
-	/**
-	 * Gets css link if it hasn't been loaded yet.
-	 *
-	 * @since 0.1.0
-	 *
-	 * @return string
-	 */
-	public function get_css() {
-		if ( $this->args['preview'] ) {
-			return '';
-		}
-
-		static $loaded = false;
-
-		if ( $loaded ) {
-			return '';
-		}
-
-		$html = '';
-
-		if ( ! is_admin() && did_action( 'wp_print_styles' ) ) {
-			$suffix = mai_lists_get_suffix();
-			$src    = MAI_LISTS_PLUGIN_URL . sprintf( 'assets/mai-lists%s.css', $suffix ) . '?ver=' . MAI_LISTS_VERSION . '.' . date( 'njYHi', filemtime( MAI_LISTS_PLUGIN_DIR . sprintf( 'assets/mai-lists%s.css', $suffix ) ) );
-			$html   = sprintf( '<link rel="stylesheet" href="%s">', esc_url( $src ) );
-			$loaded = true;
-		}
 
 		return $html;
 	}

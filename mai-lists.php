@@ -99,29 +99,9 @@ final class Mai_Lists_Plugin {
 			define( 'MAI_LISTS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 		}
 
-		// Plugin Classes Path.
-		if ( ! defined( 'MAI_LISTS_CLASSES_DIR' ) ) {
-			define( 'MAI_LISTS_CLASSES_DIR', MAI_LISTS_PLUGIN_DIR . 'classes/' );
-		}
-
-		// Plugin Includes Path.
-		if ( ! defined( 'MAI_LISTS_INCLUDES_DIR' ) ) {
-			define( 'MAI_LISTS_INCLUDES_DIR', MAI_LISTS_PLUGIN_DIR . 'includes/' );
-		}
-
 		// Plugin Folder URL.
 		if ( ! defined( 'MAI_LISTS_PLUGIN_URL' ) ) {
 			define( 'MAI_LISTS_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-		}
-
-		// Plugin Root File.
-		if ( ! defined( 'MAI_LISTS_PLUGIN_FILE' ) ) {
-			define( 'MAI_LISTS_PLUGIN_FILE', __FILE__ );
-		}
-
-		// Plugin Base Name
-		if ( ! defined( 'MAI_LISTS_BASENAME' ) ) {
-			define( 'MAI_LISTS_BASENAME', dirname( plugin_basename( __FILE__ ) ) );
 		}
 	}
 
@@ -135,13 +115,21 @@ final class Mai_Lists_Plugin {
 	private function includes() {
 		// Include vendor libraries.
 		require_once __DIR__ . '/vendor/autoload.php';
-		// Classes.
-		foreach ( glob( MAI_LISTS_CLASSES_DIR . '*.php' ) as $file ) { include $file; }
+
 		// Includes.
-		foreach ( glob( MAI_LISTS_INCLUDES_DIR . '*.php' ) as $file ) { include $file; }
+		foreach ( glob( MAI_LISTS_PLUGIN_DIR . 'includes/*.php' ) as $file ) { include $file; }
+
+		// Classes.
+		foreach ( glob( MAI_LISTS_PLUGIN_DIR . 'classes/*.php' ) as $file ) { include $file; }
+
 		// Blocks.
 		include MAI_LISTS_PLUGIN_DIR . 'blocks/mai-list/block.php';
 		include MAI_LISTS_PLUGIN_DIR . 'blocks/mai-list-item/block.php';
+
+		// Instantiate classes.
+		new Mai_List_Fields;
+		new Mai_List_Block;
+		new Mai_List_Item_Block;
 	}
 
 	/**
@@ -151,7 +139,7 @@ final class Mai_Lists_Plugin {
 	 * @return void
 	 */
 	public function hooks() {
-		add_action( 'plugins_loaded',    [ $this, 'updater' ], 12 );
+		add_action( 'plugins_loaded',    [ $this, 'updater' ] );
 		add_action( 'after_setup_theme', [ $this, 'run' ] ); // Plugins loaded is too early to check for engine version.
 	}
 
@@ -209,7 +197,10 @@ final class Mai_Lists_Plugin {
 			return;
 		}
 
-		new Mai_List_Blocks;
+		// // Instantiate classes.
+		// new Mai_List_Fields;
+		// new Mai_List_Block;
+		// new Mai_List_Item_Block;
 	}
 
 	/**
@@ -239,9 +230,9 @@ final class Mai_Lists_Plugin {
  *
  * @return object|Mai_Lists_Plugin The one true Mai_Lists_Plugin Instance.
  */
-function mai_lists() {
+function mai_lists_plugin() {
 	return Mai_Lists_Plugin::instance();
 }
 
 // Get Mai_Lists_Plugin Running.
-mai_lists();
+mai_lists_plugin();

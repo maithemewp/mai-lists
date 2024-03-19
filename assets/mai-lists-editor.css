@@ -1,12 +1,10 @@
-.editor-styles-wrapper .mai-list,
+/* This is all identical to mai-lists.css except !important on .mai-list stuff to override what we have in editor.scss in Mai Engine. */
 .mai-list {
-	/* This --sub-list-margin should match what's in Mai Engine _list.scss. */
-	/* --sub-list-margin: var(--list-margin, var(--list-margin-top, 0) var(--list-margin-right, 0) var(--list-margin-bottom, var(--spacing-sm)) var(--list-margin-left, 1.75em)); */
 	--paragraph-margin-bottom: var(--spacing-xs);
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	line-height: 1.5;
+	list-style-type: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	line-height: 1.5 !important;
 }
 
 .mai-list-item {
@@ -34,7 +32,7 @@
 
 .mai-list-icon-wrap {
 	display: grid;
-	place-items: start;
+	place-items: center;
 	margin-top: var(--icon-margin-top, 0px);
 	text-align: var(--icon-align, center);
 }

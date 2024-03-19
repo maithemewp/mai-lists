@@ -9,8 +9,7 @@
   "script": "",
   "editorStyle": "file:./../../assets/mai-lists.min.css",
   "acf": {
-    "mode": "preview",
-    "renderCallback": "mai_do_list_block"
+    "mode": "preview"
   },
   "supports": {
     "align": [ "wide", "full" ],
