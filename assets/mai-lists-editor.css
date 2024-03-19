@@ -32,9 +32,8 @@
 
 .mai-list-icon-wrap {
 	display: grid;
-	place-items: center;
+	place-items: var(--icon-align, center);
 	margin-top: var(--icon-margin-top, 0px);
-	text-align: var(--icon-align, center);
 }
 
 .mai-list-icon {
