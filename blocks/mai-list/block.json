@@ -7,7 +7,7 @@
   "textdomain": "mai-lists",
   "style": "",
   "script": "",
-  "editorStyle": "file:./../../assets/mai-lists.min.css",
+  "editorStyle": "mai-lists",
   "acf": {
     "mode": "preview"
   },

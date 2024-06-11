@@ -123,6 +123,10 @@ class Mai_List {
 			return;
 		}
 
+		// Enqueue styles.
+		wp_enqueue_style( 'mai-lists' );
+
+		// Build atts from args.
 		$atts = [
 			'class' => 'mai-list',
 		];

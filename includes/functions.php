@@ -3,6 +3,22 @@
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+add_action( 'init', 'mai_lists_register_styles' );
+/**
+ * Registers the plugin scripts and styles.
+ *
+ * @access private
+ *
+ * @since TBD
+ *
+ * @return void
+ */
+function mai_lists_register_styles() {
+	$suffix = mai_lists_get_suffix();
+
+	wp_register_style( 'mai-lists', MAI_LISTS_PLUGIN_URL . sprintf( 'assets/mai-lists%s.css', $suffix ), [], MAI_LISTS_VERSION . '.' . date( 'njYHi', filemtime( MAI_LISTS_PLUGIN_DIR . sprintf( 'assets/mai-lists%s.css', $suffix ) ) ) );
+}
+
 /**
  * Gets an list.
  *

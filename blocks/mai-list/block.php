@@ -19,9 +19,8 @@ class Mai_List_Block {
 	 * @return void
 	 */
 	function hooks() {
-		add_action( 'acf/init',                  [ $this, 'register_block' ] );
-		add_action( 'acf/init',                  [ $this, 'register_field_group' ], 12 ); // 12 to make sure clone fields are registered.
-		add_filter( 'render_block_acf/mai-list', [ $this, 'add_css' ], 50, 2 );
+		add_action( 'acf/init', [ $this, 'register_block' ] );
+		add_action( 'acf/init', [ $this, 'register_field_group' ], 12 ); // 12 to make sure clone fields are registered.
 	}
 
 	/**
@@ -113,36 +112,6 @@ class Mai_List_Block {
 
 		// Render.
 		echo $list->get();
-	}
-
-	/**
-	 * Adds CSS on demand.
-	 * This runs after the standard `render_block` filters
-	 * to fix instances where `render_block` hides/removes the block.
-	 *
-	 * @since TBD
-	 *
-	 * @param string $block_content The block content.
-	 * @param array  $block         The block data.
-	 *
-	 * @return string
-	 */
-	function add_css( $block_content, $block ) {
-		if ( is_admin() || ! $block_content || ! did_action( 'wp_print_styles' ) ) {
-			return $block_content;
-		}
-
-		static $loaded = false;
-
-		if ( ! $loaded ) {
-			$loaded        = true;
-			$suffix        = mai_lists_get_suffix();
-			$src           = MAI_LISTS_PLUGIN_URL . sprintf( 'assets/mai-lists%s.css', $suffix ) . '?ver=' . MAI_LISTS_VERSION . '.' . date( 'njYHi', filemtime( MAI_LISTS_PLUGIN_DIR . sprintf( 'assets/mai-lists%s.css', $suffix ) ) );
-			$html          = sprintf( '<link rel="stylesheet" href="%s">', esc_url( $src ) );
-			$block_content = $this->str_replace_first( '<li', $html . '<li', $block_content );
-		}
-
-		return $block_content;
 	}
 
 	/**
