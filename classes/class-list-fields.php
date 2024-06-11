@@ -38,6 +38,10 @@ class Mai_List_Fields {
 	 * @return array
 	 */
 	function load_list_icon( $field ) {
+		if ( ! is_admin() ) {
+			return $fields;
+		}
+
 		if ( ! ( isset( $field['sub_fields'] ) && $field['sub_fields'] ) ) {
 			return $fields;
 		}
@@ -63,6 +67,10 @@ class Mai_List_Fields {
 	 * @return array
 	 */
 	function load_list_item_icon( $field ) {
+		if ( ! is_admin() ) {
+			return $fields;
+		}
+
 		if ( ! ( isset( $field['sub_fields'] ) && $field['sub_fields'] ) ) {
 			return $fields;
 		}
@@ -96,6 +104,10 @@ class Mai_List_Fields {
 	 * @return array
 	 */
 	function load_list_columns( $field ) {
+		if ( ! is_admin() ) {
+			return $fields;
+		}
+
 		if ( ! ( isset( $field['sub_fields'] ) && $field['sub_fields'] ) ) {
 			return $fields;
 		}
