@@ -6,8 +6,7 @@
   "textdomain": "mai-lists",
   "parent": [ "acf/mai-list" ],
   "acf": {
-    "mode": "preview",
-    "renderCallback": "mai_do_list_item_block"
+    "mode": "preview"
   },
   "supports": {
     "align": false,

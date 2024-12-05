@@ -7,10 +7,9 @@
   "textdomain": "mai-lists",
   "style": "",
   "script": "",
-  "editorStyle": "file:./../../assets/mai-lists.min.css",
+  "editorStyle": "mai-lists",
   "acf": {
-    "mode": "preview",
-    "renderCallback": "mai_do_list_block"
+    "mode": "preview"
   },
   "supports": {
     "align": [ "wide", "full" ],

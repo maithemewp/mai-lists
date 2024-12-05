@@ -1,17 +1,21 @@
+.editor-styles-wrapper .mai-list,
 .mai-list {
-	line-height: 1.5;
-	--list-margin: 0;
-	--list-padding: 0;
-	--list-item-margin: 0;
-	--sub-list-margin: 0;
+	/* This --sub-list-margin should match what's in Mai Engine _list.scss. */
+	/* --sub-list-margin: var(--list-margin, var(--list-margin-top, 0) var(--list-margin-right, 0) var(--list-margin-bottom, var(--spacing-sm)) var(--list-margin-left, 1.75em)); */
 	--paragraph-margin-bottom: var(--spacing-xs);
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	line-height: 1.5;
 }
 
 .mai-list-item {
+	list-style-type: none;
 	display: grid;
 	grid-template-columns: var(--grid-template-columns);
 	gap: var(--icon-gap, var(--spacing-md));
 	place-content: start;
+	margin: 0;
 }
 
 /* define grid-template-columns independently for nested lists */
@@ -30,6 +34,8 @@
 
 .mai-list-icon-wrap {
 	display: block;
+	/* height: 100%; */
+	/* min-height: 0; */
 	margin-top: var(--icon-margin-top, 0px);
 	text-align: var(--icon-align, center);
 }
