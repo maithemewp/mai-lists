@@ -33,11 +33,11 @@
 }
 
 .mai-list-icon-wrap {
-	display: grid;
-	place-items: var(--icon-align, start);
+	display: block;
 	/* height: 100%; */
 	/* min-height: 0; */
 	margin-top: var(--icon-margin-top, 0px);
+	text-align: var(--icon-align, center);
 }
 
 .mai-list-icon {
