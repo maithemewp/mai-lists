@@ -1,7 +1,14 @@
 # Changelog
 
+## 1.2.0 (12/5/24)
+* Changed: Updated the updater.
+* Changed: Move block registration to a class for easier maintainability.
+* Changed: [Performance] Only run ACF filters in the back end.
+* Changed: Remove on-demand CSS and load in head on any page that has the block.
+* Fixed: Core lists inside Mai Lists margin was getting removed unexpectedly.
+
 ## 1.1.4 (11/27/23)
-Changed: Updated updater.
+* Changed: Updated the updater.
 
 ## 1.1.3 (5/15/23)
 * Fixed: Mai List Item block wasn't correctly requiring Mai List as the parent block.
