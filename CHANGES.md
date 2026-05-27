@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.2 (5/27/26)
+* Changed: Updated the updater for PHP 8.4 support.
+
 ## 1.2.1 (5/27/26)
 * Changed: Updated blocks to Block API v3 for WP 6.9 compatibility.
 
