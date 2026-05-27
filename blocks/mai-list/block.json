@@ -1,4 +1,5 @@
 {
+  "apiVersion": 3,
   "name": "acf/mai-list",
   "title": "Mai List",
   "description": "Simple and beautiful icon or numbered lists and responsive icon feature grids.",

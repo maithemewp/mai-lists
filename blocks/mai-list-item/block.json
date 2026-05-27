@@ -1,4 +1,5 @@
 {
+  "apiVersion": 3,
   "name": "acf/mai-list-item",
   "title": "Mai List Item",
   "description": "A list item in for Mai List block.",
