@@ -6,7 +6,7 @@
   "textdomain": "mai-lists",
   "parent": [ "acf/mai-list" ],
   "acf": {
-    "mode": "preview"
+    "blockVersion": 3
   },
   "supports": {
     "align": false,
