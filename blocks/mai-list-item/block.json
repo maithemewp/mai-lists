@@ -1,5 +1,4 @@
 {
-  "apiVersion": 3,
   "name": "acf/mai-list-item",
   "title": "Mai List Item",
   "description": "A list item in for Mai List block.",
@@ -7,7 +6,7 @@
   "textdomain": "mai-lists",
   "parent": [ "acf/mai-list" ],
   "acf": {
-    "mode": "preview"
+    "blockVersion": 3
   },
   "supports": {
     "align": false,

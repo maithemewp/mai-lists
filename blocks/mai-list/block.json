@@ -1,5 +1,4 @@
 {
-  "apiVersion": 3,
   "name": "acf/mai-list",
   "title": "Mai List",
   "description": "Simple and beautiful icon or numbered lists and responsive icon feature grids.",
@@ -10,7 +9,7 @@
   "script": "",
   "editorStyle": "mai-lists",
   "acf": {
-    "mode": "preview"
+    "blockVersion": 3
   },
   "supports": {
     "align": [ "wide", "full" ],
